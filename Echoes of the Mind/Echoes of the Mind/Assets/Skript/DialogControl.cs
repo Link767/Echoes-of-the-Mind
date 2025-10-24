@@ -2,15 +2,30 @@ using UnityEngine;
 
 public class DialogControl : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+    [SerializeField] private GameObject _HitE;
+    [SerializeField] private GameObject _DialogUI;
+    private bool _IsPalyer = false;
 
-    // Update is called once per frame
     void Update()
     {
-        
+        if(_IsPalyer == true && Input.GetKey(KeyCode.E))
+        {
+            _HitE.SetActive(false);
+            _DialogUI.SetActive(true);
+        }
+    }
+
+    void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.tag == "Player")
+        {
+            _HitE.SetActive(true);
+            _IsPalyer = true;
+        }
+    }
+    void OnTriggerExit2D(Collider2D collision)
+    {
+        _HitE.SetActive(false);
+        _DialogUI.SetActive(false);
     }
 }
